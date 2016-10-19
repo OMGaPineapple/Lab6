@@ -21,7 +21,7 @@
       
     <asp:Label ID="lblSemester" runat="server" Text="Semester: " CssClass="center">
         <asp:DropDownList ID="ddlSemester" runat="server" CssClass="dropdown">
-            <asp:ListItem Text="Select..." Value="0"></asp:ListItem>
+            <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
             <asp:ListItem Value="Spring/Summer"></asp:ListItem>
             <asp:ListItem Value="Fall"></asp:ListItem>
             <asp:ListItem Value="Winter"></asp:ListItem>

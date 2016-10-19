@@ -48,7 +48,6 @@ public class CourseOfferingsDataAccess : DataAccessBase
         SqlCommand command = new SqlCommand(selectCoursesOfferedSQL, connection);
 
         SqlDataReader reader = null;
-        CourseOffering ourCourses = null;
 
         List<CourseOffering> courses = new List<CourseOffering>();
 
@@ -70,8 +69,6 @@ public class CourseOfferingsDataAccess : DataAccessBase
                     CourseOffering retrievedCourse = new CourseOffering(course, courseYear, courseSemester);
                     courses.Add(retrievedCourse);
 
-                    ourCourses = new CourseOffering(course, courseYear, courseSemester);
-                    courses.Add(ourCourses);
                 }
             }
         }
