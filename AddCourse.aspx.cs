@@ -60,5 +60,9 @@ public partial class AddCourse : PageBase
 
         userCourse = new Course(courseNumber, courseName, courseHours);
         CourseDataAccess.addNewCourse(userCourse);
+
+        txtCourseNumber.Text = "";
+        txtCourseName.Text = "";
+        txtCourseHours.Text = "";
     }
 }

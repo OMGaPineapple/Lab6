@@ -9,6 +9,7 @@ public partial class AddCourseOffering : PageBase
 {
     Course userCourse = null;
     CourseComparer sortBy = new CourseComparer();
+    CourseOfferingComparer sortOffering = new CourseOfferingComparer();
 
     protected void Page_PreRender(object sender, EventArgs e)
     {
@@ -16,6 +17,7 @@ public partial class AddCourseOffering : PageBase
         {
             List<Course> userCourse = CourseDataAccess.retreiveAllCourses();
             userCourse.Sort(sortBy);
+
             foreach (Course course in userCourse)
             {
                 ListItem item = new ListItem(course.ToString());
@@ -24,6 +26,7 @@ public partial class AddCourseOffering : PageBase
         }
 
         List<CourseOffering> coursesOffered = CourseOfferingsDataAccess.retreiveAllCourses();
+        coursesOffered.Sort(sortOffering);
 
         if (coursesOffered.Count == 0)
         {
@@ -56,15 +59,15 @@ public partial class AddCourseOffering : PageBase
                     row.Cells.Add(cell);
 
                     cell = new TableCell();
-                    if(ourCourse.Semester == "0")
+                    if(ourCourse.Semester == "Spring/Summer")
                     {
                         cell.Text = Semesters.SpringSummer;
                     }
-                    else if(ourCourse.Semester == "1")
+                    else if(ourCourse.Semester == "Fall")
                     {
                         cell.Text = Semesters.Fall;
                     }
-                    else if (ourCourse.Semester == "2")
+                    else if (ourCourse.Semester == "Winter")
                     {
                         cell.Text = Semesters.Winter;
                     }
@@ -79,6 +82,7 @@ public partial class AddCourseOffering : PageBase
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         List<Course> userCourse = CourseDataAccess.retreiveAllCourses();
+        userCourse.Sort(sortBy);
 
         string offeredSemester = ddlSemester.SelectedValue;
         int offeredYear = Int32.Parse(ddlOfferYear.SelectedValue);
@@ -87,5 +91,6 @@ public partial class AddCourseOffering : PageBase
 
         CourseOffering coursesOffered = new CourseOffering(userCourse[courseIndex], offeredYear, offeredSemester);
         CourseOfferingsDataAccess.addNewCourseOffering(coursesOffered);
+
     }
 }
