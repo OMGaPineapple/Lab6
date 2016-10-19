@@ -1,23 +1,38 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/AlgonquinMasterPage2.master" AutoEventWireup="true" CodeFile="AddCourseOffering.aspx.cs" Inherits="AddCourseOffering" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Label ID="Label1" runat="server" Text="Course: ">
-        <asp:DropDownList ID="DropDownList1" runat="server">
-            <asp:ListItem Text="Select a Course..." Value="-1"></asp:ListItem>
+
+    <h1>Add New Course Offering</h1>
+    <asp:Label ID="lblCourse" runat="server" Text="Course: " CssClass="center">
+        <asp:DropDownList ID="ddlCourses" runat="server" CssClass="dropdown">
+            <asp:ListItem Text="Select a Course..." Value="0"></asp:ListItem>
         </asp:DropDownList>
     </asp:Label><br /><br />
 
-    <asp:Label ID="Label4" runat="server" Text="Offer In Year: ">
-        <asp:DropDownList ID="DropDownList4" runat="server">
-            <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+    <asp:Label ID="lblOfferYear" runat="server" Text="Offer In Year: " CssClass="center">
+        <asp:DropDownList ID="ddlOfferYear" runat="server" CssClass="dropdown">
+            <asp:ListItem Text="Select..." Value="0"></asp:ListItem>
+            <asp:ListItem Value="2016"></asp:ListItem>
+            <asp:ListItem Value="2017"></asp:ListItem>
+            <asp:ListItem Value="2018"></asp:ListItem>
+            <asp:ListItem Value="2019"></asp:ListItem>
+            <asp:ListItem Value="2020"></asp:ListItem>
         </asp:DropDownList>
     </asp:Label><br /><br />
       
-    <asp:Label ID="Label5" runat="server" Text="Semester: ">
-        <asp:DropDownList ID="DropDownList5" runat="server">
-            <asp:ListItem Text="Select..." Value="-1"></asp:ListItem>
+    <asp:Label ID="lblSemester" runat="server" Text="Semester: " CssClass="center">
+        <asp:DropDownList ID="ddlSemester" runat="server" CssClass="dropdown">
+            <asp:ListItem Text="Select..." Value="0"></asp:ListItem>
+            <asp:ListItem Value="Spring/Summer"></asp:ListItem>
+            <asp:ListItem Value="Fall"></asp:ListItem>
+            <asp:ListItem Value="Winter"></asp:ListItem>
         </asp:DropDownList>
-    </asp:Label><br /><br />  
-    <asp:Table ID="tblNAMETHISCODY" runat="server" CssClass="table">
+    </asp:Label><br /><br /> 
+    <asp:Button ID="btnSubmit" runat="server" Text="Submit Course Information" Width="225px" Height="20px" CssClass="button" OnClick="btnSubmit_Click" />
+     <br />
+    <br />
+     <asp:Label ID="Label1" runat="server" Text="There are following course offeringws: " CssClass="center"></asp:Label>
+     <br />
+    <asp:Table ID="tblCourseOffering" runat="server" CssClass="table">
             <asp:TableRow>
                 <asp:TableCell>
                         Course Code
