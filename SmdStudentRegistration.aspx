@@ -1,11 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/AlgonquinMasterPage2.master" AutoEventWireup="true" CodeFile="SmdStudentRegistration.aspx.cs" Inherits="SmdCourseRegistration" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="Logo" runat="Server">
-    <br />
-    <br />
-    <asp:Image ID="programLogo" runat="server"
-        ImageUrl='App_Themes/SMD.png' />
-</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <asp:Panel ID="Panel1" runat="server">
         <h1>Student Course Records</h1>

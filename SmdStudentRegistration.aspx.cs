@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class SmdCourseRegistration : System.Web.UI.Page
+public partial class SmdCourseRegistration : PageBase
 {
     CourseOffering coursesOffered = null;
     Course userCourse = null;
