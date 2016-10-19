@@ -28,7 +28,6 @@ public partial class AddCourse : PageBase
         }
         else
         {
-
             foreach (Course course in userCourse)
             {
                 {

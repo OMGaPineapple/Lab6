@@ -26,7 +26,7 @@ public class PageBase : System.Web.UI.Page
 
             addNewCourseSideButton.Text += "Add Course";
             addNewCourseOfferingSideButton.Text += "Add Course Offering";
-            registerStudentSideButton.Text += "Register Courses";
+            registerStudentSideButton.Text += "Register Students";
         }
 
         addNewCourseSideButton.Click += addNewCourseSideButton_Click;
