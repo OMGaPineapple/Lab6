@@ -31,9 +31,6 @@
 <!-- begin wrapper -->
 <div id="wrapper" style="min-height: 180px;">
     <form id="form1" runat="server">
-        <asp:ContentPlaceHolder ID="Logo" runat="server">
-	            <a href="http://www3.algonquincollege.com/sat"><asp:image runat="server" id="Image1"/></a>
-        </asp:ContentPlaceHolder>
 
 	    <!-- begin leftWrapper -->
 	    <div id="leftWrapper">
