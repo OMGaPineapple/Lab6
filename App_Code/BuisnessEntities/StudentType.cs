@@ -23,10 +23,15 @@ public class StudentType : Student
         {
             return "Part Time";
         }
-        else
+        else if(student is CoopStudent)
         {
             return "Co-op";
+        } else
+        {
+            return null;
         }
+
+        
     }
 
     //public class StudentType

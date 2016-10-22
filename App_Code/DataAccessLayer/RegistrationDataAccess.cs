@@ -60,7 +60,6 @@ public class RegistrationDataAccess : DataAccessBase
         SqlDataReader reader = null;
 
         List<Student> students = new List<Student>();
-        List<Student> studentsInOffering = null;
 
         try
         {
@@ -72,36 +71,31 @@ public class RegistrationDataAccess : DataAccessBase
                 while (reader.Read())
                 {
                     //int studentNumber = (int)reader["Student_StudentNum"];
-                    string courseID = (string)reader["Course_CourseID"];
-                    int courseYear = (int)reader["Year"];
-                    string courseSemester = (string)reader["Semester"];
-
-                    List<Student> student = StudentDataAccess.retreiveAllStudents();
-
-                    foreach (Student i in student)
-                    {
-                        string type = StudentType.getStudentType(i);
+                    string studentNum = (string)reader["StudentNum"];
+                    string name = (string)reader["Name"];
+                    string type = (string)reader["Type"];
+         
 
                         if (type == "Full Time")
                         {
-                            Student ourStudent = new FullTimeStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
+                            Student ourStudent = new FullTimeStudent(studentNum, name);
+                            students.Add(ourStudent);
 
                         }
                         if (type == "Part Time")
                         {
-                            Student ourStudent = new PartTimeStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
+                            Student ourStudent = new PartTimeStudent(studentNum, name);
+                            students.Add(ourStudent);
                         }
-                        else
+                        else if (type == "Co-op")
                         {
-                            Student ourStudent = new CoopStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
+                            Student ourStudent = new CoopStudent(studentNum, name);
+                            students.Add(ourStudent);
                         }
 
                     }
                 }
-            }
+            
         }
         catch (Exception)
         {
@@ -111,7 +105,7 @@ public class RegistrationDataAccess : DataAccessBase
         {
             connection.Close();
         }
-        return studentsInOffering;
+        return students;
     }
 
 

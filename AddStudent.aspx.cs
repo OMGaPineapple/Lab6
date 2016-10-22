@@ -7,13 +7,27 @@ using System.Web.UI.WebControls;
 
 public partial class AddStudent : PageBase
 {
-   // CourseComparer sortBy = new CourseComparer();
+    // CourseComparer sortBy = new CourseComparer();
+ 
+
     protected void Page_PreRender(object sender, EventArgs e)
     {
         List<CourseOffering> coursesOffered = CourseOfferingsDataAccess.retreiveAllCourses();
+
+        if (!Page.IsPostBack)
+        {
+            foreach (CourseOffering course in coursesOffered)
+            {
+                ListItem item = new ListItem(course.ToString(), course.CourseOffered.CourseNumber);
+                ddCourseOffering.Items.Add(item);
+            }
+        }
+
+
         List<Student> students =  StudentDataAccess.retreiveAllStudents();
 
         List<Student> registeredStudents = null;
+        
 
         foreach (CourseOffering courseOffering in coursesOffered)
         {
@@ -23,16 +37,8 @@ public partial class AddStudent : PageBase
             }
         }
 
-        if (!IsPostBack)
-        {     
-            foreach (CourseOffering course in coursesOffered)
-            {
-                ListItem item = new ListItem(course.ToString(),course.CourseOffered.CourseNumber);
-                ddCourseOffering.Items.Add(item);
-            }
-        }
-
-        if (students.Count == 0)
+       
+        if (registeredStudents == null)
         {
             TableRow lastRow = new TableRow();
             TableCell lastRowCell = new TableCell();
@@ -89,8 +95,70 @@ public partial class AddStudent : PageBase
         List<Student> students = StudentDataAccess.retreiveAllStudents();
         List<Student> registeredStudents = null;
 
-        if (rblStudentStatus.SelectedValue == "Full-Time") {
+        if (rblStudentStatus.SelectedValue == "Full-Time")
+        {
             FullTimeStudent student = new FullTimeStudent(studentNum, studentName);
+
+            foreach (CourseOffering courseOffering in coursesOffered)
+            {
+                if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+                {
+                    registeredStudents = RegistrationDataAccess.getStudentsFromOffering(courseOffering);
+                }
+            }
+            if (registeredStudents.Count == 0 || registeredStudents == null)
+            {
+                if (students.Count == 0)
+                {
+                    StudentDataAccess.AddStudent(student);
+                }
+
+                foreach (Student thisStudent in students)
+                {
+                    if (!(thisStudent.Name == student.Name))
+                    {
+                        StudentDataAccess.AddStudent(student);
+                    }
+                }
+
+                foreach (CourseOffering courseOffering in coursesOffered)
+                {
+                    if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+                    {
+                        RegistrationDataAccess.addRegistration(student, courseOffering);
+                    }
+                }
+
+            }
+            else
+            {
+                foreach (Student registeredStudent in students)
+                {
+                    if (!(student.Number == registeredStudent.Number))
+                    {
+                        StudentDataAccess.AddStudent(student);
+                    }
+
+                    if (registeredStudent.Number == student.Number)
+                    {
+                        //Does nothing. 
+                    }
+                    else
+                    {
+                        foreach (CourseOffering courseOffering in coursesOffered)
+                        {
+                            if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+                            {
+                                RegistrationDataAccess.addRegistration(student, courseOffering);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (rblStudentStatus.SelectedValue == "Part-Time")
+        {
+            PartTimeStudent student = new PartTimeStudent(studentNum, studentName);
 
             foreach (CourseOffering courseOffering in coursesOffered)
             {
@@ -108,12 +176,12 @@ public partial class AddStudent : PageBase
 
                 foreach (Student thisStudent in students)
                 {
-                    if(!(thisStudent.Name == student.Name))
+                    if (!(thisStudent.Name == student.Name))
                     {
-                     StudentDataAccess.AddStudent(student);
+                        StudentDataAccess.AddStudent(student);
                     }
                 }
- 
+
                 foreach (CourseOffering courseOffering in coursesOffered)
                 {
                     if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
@@ -121,7 +189,7 @@ public partial class AddStudent : PageBase
                         RegistrationDataAccess.addRegistration(student, courseOffering);
                     }
                 }
-               
+
             }
             else
             {
@@ -148,48 +216,84 @@ public partial class AddStudent : PageBase
                     }
                 }
             }
-    //   } else if (rblStudentStatus.SelectedValue == "Part-Time")
-    //    {
-    //        PartTimeStudent student = new PartTimeStudent(studentNum, studentName);
+        }
+        else if (rblStudentStatus.SelectedValue == "Co-Op")
+        {
+            CoopStudent student = new CoopStudent(studentNum, studentName);
 
-    //        foreach (Student registeredStudent in students)
-    //        {
-    //            if (!(student.Number == registeredStudent.Number))
-    //            {
-    //                StudentDataAccess.AddStudent(student);
-    //            }
-    //        }
-            
-    //        foreach (CourseOffering course in coursesOffered)
-    //        {
-    //            if (course.ToString() == ddCourseOffering.Text)
-    //            {
-    //                RegistrationDataAccess.addRegistration(student, course);
-    //            }
-    //        }
+            foreach (CourseOffering courseOffering in coursesOffered)
+            {
+                if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+                {
+                    registeredStudents = RegistrationDataAccess.getStudentsFromOffering(courseOffering);
+                }
+            }
+            if (registeredStudents == null)
+            {
+                if (students.Count == 0)
+                {
+                    StudentDataAccess.AddStudent(student);
+                }
 
-    //    }
-    //    else if (rblStudentStatus.SelectedValue == "Co-Op")
-    //    {
-    //        CoopStudent student = new CoopStudent(studentNum,studentName);
+                foreach (Student thisStudent in students)
+                {
+                    if (!(thisStudent.Name == student.Name))
+                    {
+                        StudentDataAccess.AddStudent(student);
+                    }
+                }
 
-    //        foreach (Student registeredStudent in students)
-    //        {
-    //            if (!(student.Number == registeredStudent.Number))
-    //            {
-    //                StudentDataAccess.AddStudent(student);
-    //            }
-    //        }
+                foreach (CourseOffering courseOffering in coursesOffered)
+                {
+                    if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+                    {
+                        RegistrationDataAccess.addRegistration(student, courseOffering);
+                    }
+                }
 
-    //        foreach (CourseOffering course in coursesOffered)
-    //        {
-    //            if(course.ToString() == ddCourseOffering.Text)
-    //            {
-    //                RegistrationDataAccess.addRegistration(student, course);
-    //             }
-    //        }
+            }
+            else
+            {
+                foreach (Student registeredStudent in students)
+                {
+                    if (!(student.Number == registeredStudent.Number))
+                    {
+                        StudentDataAccess.AddStudent(student);
+                    }
 
-       }
+                    if (registeredStudent.Number == student.Number)
+                    {
+                        //Does nothing. 
+                    }
+                    else
+                    {
+                        foreach (CourseOffering courseOffering in coursesOffered)
+                        {
+                            if (courseOffering.CourseOffered.ToString() == ddCourseOffering.SelectedItem.Text)
+                            {
+                                RegistrationDataAccess.addRegistration(student, courseOffering);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected void ddCourseOffering_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        List<CourseOffering> coursesOffered = CourseOfferingsDataAccess.retreiveAllCourses();
+
+        foreach (CourseOffering courseOffering in coursesOffered)
+        {
+            if (courseOffering.ToString() == ddCourseOffering.SelectedItem.Text)
+            {
+                ddCourseOffering.ClearSelection(); //making sure the previous selection has been cleared
+                ddCourseOffering.Items.FindByValue(courseOffering.CourseOffered.courseNumber).Selected = true;
+            }
+        }
+
+
         
     }
 }
