@@ -11,9 +11,9 @@ using System.Web.Configuration;
 /// </summary>
 public class CourseOfferingsDataAccess : DataAccessBase
 {
-   
+
     public static void addNewCourseOffering(CourseOffering courseOffering)
-    { 
+    {
 
         string insertCourseOfferingSQL = "INSERT INTO CourseOffering (Year, Semester, Course_CourseID) VALUES (@year, @Semester, @courseID)";
 
@@ -83,4 +83,3 @@ public class CourseOfferingsDataAccess : DataAccessBase
         return courses;
     }
 }
-

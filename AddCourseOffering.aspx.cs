@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class AddCourseOffering : PageBase
 {
-    Course userCourse = null;
+   
     CourseComparer sortBy = new CourseComparer();
     CourseOfferingComparer sortOffering = new CourseOfferingComparer();
 

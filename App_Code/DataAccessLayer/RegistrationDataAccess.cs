@@ -13,11 +13,13 @@ public class RegistrationDataAccess : DataAccessBase
 {
     public static void addRegistration(Student student, CourseOffering courseOffering)
     {
-        string insertRegistrationSQL = "INSERT INTO Registration " + "(Student_StudentNum, CourseOffering_Course_CourseID, CourseOffering_Year, CourseOffering_Semester) " + "VALUES (@studentNum, @courseID, @year, @semester)";
+        string insertRegistrationSQL = "INSERT INTO Registration " + 
+            "(Student_StudentNum, CourseOffering_Course_CourseID, CourseOffering_Year, CourseOffering_Semester) " + 
+            "VALUES (@studentNum, @courseID, @year, @semester)";
 
         SqlConnection connection = new SqlConnection(connectionString);
         SqlCommand sqlCourseCommand = new SqlCommand(insertRegistrationSQL, connection);
-        string type = StudentType.getStudentType(student);
+   
 
         sqlCourseCommand.Parameters.AddWithValue("@studentNum", student.Number);
         sqlCourseCommand.Parameters.AddWithValue("@courseID", courseOffering.CourseOffered.CourseNumber);
@@ -40,7 +42,7 @@ public class RegistrationDataAccess : DataAccessBase
         }
     }
 
-        public static List<Student> getStudentsFromOffering()
+    public static List<Student> getStudentsFromOffering(CourseOffering courseOffering)
     {
         string selectSQL = "SELECT s.StudentNum, s.Name, s.Type FROM Student s "
                                 + "JOIN Registration r ON s.StudentNum = r.Student_StudentNum  "
@@ -50,6 +52,10 @@ public class RegistrationDataAccess : DataAccessBase
 
         SqlConnection connection = new SqlConnection(connectionString);
         SqlCommand command = new SqlCommand(selectSQL, connection);
+
+        command.Parameters.AddWithValue("@courseID", courseOffering.CourseOffered.courseNumber);
+        command.Parameters.AddWithValue("@year", courseOffering.Year);
+        command.Parameters.AddWithValue("@Semester", courseOffering.Semester);
 
         SqlDataReader reader = null;
 

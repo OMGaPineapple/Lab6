@@ -2,18 +2,18 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Register Students</h1>
-    <asp:Label ID="ddCourseOffering" runat="server" Text="Course Offering: " >
-        <asp:DropDownList ID="DropDownList1" CssClass="dropdown" runat="server">
+    <asp:Label ID="lblCourseOffering" runat="server" Text="Course Offering: " >
+        <asp:DropDownList ID="ddCourseOffering" CssClass="dropdown" runat="server" AutoPostBack="true">
             <asp:ListItem Text="Select a Course..." Value="-1"></asp:ListItem>
         </asp:DropDownList>
     </asp:Label><br /><br />
 
-    <asp:Label ID="txtStudentNumber" runat="server" Text="Student Number: ">
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <asp:Label ID="label1" runat="server" Text="Student Number: ">
+        <asp:TextBox ID="txtStudentNumber" runat="server"></asp:TextBox>
     </asp:Label><br /><br />
       
-    <asp:Label ID="txtStudentName" runat="server" Text="Student Name: ">
-        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+    <asp:Label ID="label2" runat="server" Text="Student Name: ">
+        <asp:TextBox ID="txtStudentName" runat="server"></asp:TextBox>
     </asp:Label><br /><br />  
 
     <asp:RadioButtonList ID="rblStudentStatus" RepeatDirection="Horizontal" runat="server">
@@ -22,7 +22,7 @@
         <asp:ListItem Text="Co-Op" Value="Co-Op"></asp:ListItem>
     </asp:RadioButtonList>
     
-    <asp:Button ID="btnAddCourseOffering" runat="server" Text="Add to course offering" /><br /><br />
+    <asp:Button ID="btnAddStudent" runat="server" Text="Add Student" OnClick="btnAddStudent_Click" /><br /><br />
     <asp:Label runat="server" Id="label" Text="The selected course offering has the following registered students."></asp:Label><br />
     <asp:Table ID="tblNAMETHISCODY" runat="server" CssClass="table">
             <asp:TableRow>
