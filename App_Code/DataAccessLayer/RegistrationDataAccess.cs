@@ -40,7 +40,7 @@ public class RegistrationDataAccess : DataAccessBase
         }
     }
 
-        public static List<Student> getStudentsFromOffering()
+    public static List<Student> getStudentsFromOffering(CourseOffering courseOffering)
     {
         string selectSQL = "SELECT s.StudentNum, s.Name, s.Type FROM Student s "
                                 + "JOIN Registration r ON s.StudentNum = r.Student_StudentNum  "
@@ -50,11 +50,13 @@ public class RegistrationDataAccess : DataAccessBase
 
         SqlConnection connection = new SqlConnection(connectionString);
         SqlCommand command = new SqlCommand(selectSQL, connection);
+        command.Parameters.AddWithValue("@courseID", courseOffering.CourseOffered.CourseNumber);
+        command.Parameters.AddWithValue("@year", courseOffering.Year.ToString());
+        command.Parameters.AddWithValue("@Semester", courseOffering.Semester);
 
         SqlDataReader reader = null;
 
-        List<Student> students = new List<Student>();
-        List<Student> studentsInOffering = null;
+        List<Student> studentsInOffering = new List<Student>();
 
         try
         {
@@ -65,41 +67,32 @@ public class RegistrationDataAccess : DataAccessBase
             {
                 while (reader.Read())
                 {
-                    //int studentNumber = (int)reader["Student_StudentNum"];
-                    string courseID = (string)reader["Course_CourseID"];
-                    int courseYear = (int)reader["Year"];
-                    string courseSemester = (string)reader["Semester"];
+                    string studentNumber = (string)reader["StudentNum"];
+                    string studentName = (string)reader["Name"];
+                    string type = (string)reader["Type"];
 
-                    List<Student> student = StudentDataAccess.retreiveAllStudents();
-
-                    foreach (Student i in student)
+                    if (type == "Full Time")
                     {
-                        string type = StudentType.getStudentType(i);
+                        Student ourStudent = new FullTimeStudent(studentNumber, studentName);
+                        studentsInOffering.Add(ourStudent);
 
-                        if (type == "Full Time")
-                        {
-                            Student ourStudent = new FullTimeStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
-
-                        }
-                        if (type == "Part Time")
-                        {
-                            Student ourStudent = new PartTimeStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
-                        }
-                        else
-                        {
-                            Student ourStudent = new CoopStudent(i.Number, i.Name);
-                            studentsInOffering.Add(ourStudent);
-                        }
-
+                    }
+                    if (type == "Part Time")
+                    {
+                        Student ourStudent = new PartTimeStudent(studentNumber, studentName);
+                        studentsInOffering.Add(ourStudent);
+                    }
+                    else
+                    {
+                        Student ourStudent = new CoopStudent(studentNumber, studentName);
+                        studentsInOffering.Add(ourStudent);
                     }
                 }
             }
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            throw;
+            throw e;
         }
         finally
         {
