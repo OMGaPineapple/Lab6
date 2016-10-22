@@ -101,6 +101,11 @@ public partial class AddStudent : PageBase
             }
             if (registeredStudents == null)
             {
+                if (students.Count == 0)
+                {
+                    StudentDataAccess.AddStudent(student);
+                }
+
                 foreach (Student thisStudent in students)
                 {
                     if(!(thisStudent.Name == student.Name))
@@ -143,7 +148,7 @@ public partial class AddStudent : PageBase
                     }
                 }
             }
-    //    } else if (rblStudentStatus.SelectedValue == "Part-Time")
+    //   } else if (rblStudentStatus.SelectedValue == "Part-Time")
     //    {
     //        PartTimeStudent student = new PartTimeStudent(studentNum, studentName);
 
