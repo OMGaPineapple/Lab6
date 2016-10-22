@@ -34,7 +34,7 @@ public class RegistrationDataAccess : DataAccessBase
         }
         catch (Exception)
         {
-            throw;
+            
         }
         finally
         {

@@ -31,7 +31,7 @@ public class StudentDataAccess : DataAccessBase
         }
         catch (Exception)
         {
-            throw;
+           
         }
         finally
         {

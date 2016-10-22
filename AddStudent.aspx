@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Register Students</h1>
     <asp:Label ID="lblCourseOffering" runat="server" Text="Course Offering: " >
-        <asp:DropDownList ID="ddCourseOffering" CssClass="dropdown" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddCourseOffering_SelectedIndexChanged">
+        <asp:DropDownList ID="ddCourseOffering" CssClass="dropdown" runat="server" AutoPostBack="true">
             <asp:ListItem Text="Select a Course..." Value="-1"></asp:ListItem>
         </asp:DropDownList>
     </asp:Label><br /><br />
